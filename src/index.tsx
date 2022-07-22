@@ -6,7 +6,9 @@ const LINKING_ERROR =
   '- You rebuilt the app after installing the package\n' +
   '- You are not using Expo managed workflow\n';
 
-const FeitianBr301Module = NativeModules.FeitianBr301Module  ? NativeModules.FeitianBr301Module  : new Proxy(
+const FeitianBr301Module = NativeModules.FeitianBr301Module
+  ? NativeModules.FeitianBr301Module
+  : new Proxy(
       {},
       {
         get() {
@@ -15,6 +17,4 @@ const FeitianBr301Module = NativeModules.FeitianBr301Module  ? NativeModules.Fei
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return FeitianBr301Module.multiply(a, b);
-}
+export default FeitianBr301Module;

@@ -9,11 +9,32 @@ npm install react-native-feitian-br301-module
 ## Usage
 
 ```js
-import { multiply } from "react-native-feitian-br301-module";
+import NtlCardReaderModule from "react-native-feitian-br301-module";
 
 // ...
+configuration ios
 
-const result = await multiply(3, 7);
+info.plist
+<key>NSBluetoothAlwaysUsageDescription</key>
+<string>App need your approval to access to the bluetooth</string>
+<key>UISupportedExternalAccessoryProtocols</key>
+<array>
+    <string>com.ftsafe.bR301</string>
+    <string>com.ftsafe.iR301</string>
+    <string>com.ftsafe.ir301</string>
+    <string>com.ftsafe.br301</string>
+</array>
+<key>NSBluetoothPeripheralUsageDescription</key>
+<string>App need your approval to access to the bluetooth</string>
+<key>UIBackgroundModes</key>
+<array>
+    <string>external-accessory</string>
+</array>
+
+link
+-libiRockey301_3.5.64_Release
+-CoreBluetooth
+-ExternalAccessory
 ```
 
 ## Contributing

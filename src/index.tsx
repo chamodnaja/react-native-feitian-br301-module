@@ -17,4 +17,18 @@ const FeitianBr301Module = NativeModules.FeitianBr301Module
       }
     );
 
-export default FeitianBr301Module;
+export function multiply(a: number, b: number): Promise<number> {
+  return FeitianBr301Module.multiply(a, b);
+}
+
+const NtlCardReaderModule = NativeModules.NtlCardReaderModule
+  ? NativeModules.NtlCardReaderModule
+  : new Proxy(
+      {},
+      {
+        get() {
+          throw new Error(LINKING_ERROR);
+        },
+      }
+    );
+export default NtlCardReaderModule;

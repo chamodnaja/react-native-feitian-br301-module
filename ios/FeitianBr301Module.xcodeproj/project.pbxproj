@@ -6,12 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		190AFB85288A4EF9006A8C37 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 190AFB84288A4EF9006A8C37 /* CoreBluetooth.framework */; };
-		190AFB87288A4F01006A8C37 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 190AFB86288A4F01006A8C37 /* ExternalAccessory.framework */; };
-		190AFB89288A4F0F006A8C37 /* libiRockey301_3.5.64_Release.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 190AFB88288A4F0F006A8C37 /* libiRockey301_3.5.64_Release.a */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -26,15 +20,14 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libFeitianBr301Module.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libFeitianBr301Module.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		190AFB7C288A4D88006A8C37 /* wintypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = wintypes.h; path = Lib/include/wintypes.h; sourceTree = "<group>"; };
-		190AFB7D288A4D88006A8C37 /* winscard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = winscard.h; path = Lib/include/winscard.h; sourceTree = "<group>"; };
-		190AFB7E288A4D88006A8C37 /* ReaderInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ReaderInterface.h; path = Lib/include/ReaderInterface.h; sourceTree = "<group>"; };
-		190AFB7F288A4D88006A8C37 /* ft301u.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ft301u.h; path = Lib/include/ft301u.h; sourceTree = "<group>"; };
-		190AFB82288A4E5F006A8C37 /* FeitianBr301Module.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FeitianBr301Module.mm; sourceTree = "<group>"; };
-		190AFB84288A4EF9006A8C37 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/CoreBluetooth.framework; sourceTree = DEVELOPER_DIR; };
-		190AFB86288A4F01006A8C37 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/ExternalAccessory.framework; sourceTree = DEVELOPER_DIR; };
-		190AFB88288A4F0F006A8C37 /* libiRockey301_3.5.64_Release.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libiRockey301_3.5.64_Release.a; path = Lib/lib/libiRockey301_3.5.64_Release.a; sourceTree = "<group>"; };
-		B3E7B5881CC2AC0600A0062D /* FeitianBr301Module.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeitianBr301Module.h; sourceTree = "<group>"; };
+		1906799B288AA73C000B5988 /* FeitianBr301Module.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = FeitianBr301Module.mm; sourceTree = "<group>"; };
+		1906799D288AA73D000B5988 /* NtlCardReaderModule.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NtlCardReaderModule.m; sourceTree = "<group>"; };
+		1906799E288AA73D000B5988 /* FeitianBr301Module.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FeitianBr301Module.h; sourceTree = "<group>"; };
+		190679A1288AA73D000B5988 /* NtlCardReaderModule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = NtlCardReaderModule.h; sourceTree = "<group>"; };
+		190679A2288AA7CA000B5988 /* wintypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = wintypes.h; sourceTree = "<group>"; };
+		190679A3288AA7CA000B5988 /* ReaderInterface.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ReaderInterface.h; sourceTree = "<group>"; };
+		190679A4288AA7CA000B5988 /* ft301u.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ft301u.h; sourceTree = "<group>"; };
+		190679A5288AA7CA000B5988 /* winscard.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = winscard.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -42,9 +35,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				190AFB89288A4F0F006A8C37 /* libiRockey301_3.5.64_Release.a in Frameworks */,
-				190AFB87288A4F01006A8C37 /* ExternalAccessory.framework in Frameworks */,
-				190AFB85288A4EF9006A8C37 /* CoreBluetooth.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -62,9 +52,6 @@
 		190AFB83288A4EF9006A8C37 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				190AFB88288A4F0F006A8C37 /* libiRockey301_3.5.64_Release.a */,
-				190AFB86288A4F01006A8C37 /* ExternalAccessory.framework */,
-				190AFB84288A4EF9006A8C37 /* CoreBluetooth.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -72,12 +59,14 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				190AFB7F288A4D88006A8C37 /* ft301u.h */,
-				190AFB7E288A4D88006A8C37 /* ReaderInterface.h */,
-				190AFB7D288A4D88006A8C37 /* winscard.h */,
-				190AFB7C288A4D88006A8C37 /* wintypes.h */,
-				B3E7B5881CC2AC0600A0062D /* FeitianBr301Module.h */,
-				190AFB82288A4E5F006A8C37 /* FeitianBr301Module.mm */,
+				190679A4288AA7CA000B5988 /* ft301u.h */,
+				190679A3288AA7CA000B5988 /* ReaderInterface.h */,
+				190679A5288AA7CA000B5988 /* winscard.h */,
+				190679A2288AA7CA000B5988 /* wintypes.h */,
+				1906799E288AA73D000B5988 /* FeitianBr301Module.h */,
+				1906799B288AA73C000B5988 /* FeitianBr301Module.mm */,
+				190679A1288AA73D000B5988 /* NtlCardReaderModule.h */,
+				1906799D288AA73D000B5988 /* NtlCardReaderModule.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				190AFB83288A4EF9006A8C37 /* Frameworks */,
 			);

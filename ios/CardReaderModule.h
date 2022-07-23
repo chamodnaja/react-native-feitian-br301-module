@@ -1,10 +1,3 @@
-//
-//  RCTNtlCardReader.h
-//  RCTApp01
-//
-//  Created by Pichayean Yensiri on 18/7/2565 BE.
-//
-
 #ifndef NtlCardReaderModule_h
 #define NtlCardReaderModule_h
 

@@ -1,11 +1,7 @@
-// RNNtlIdCardReader.m
-
-#import "NtlCardReaderModule.h"
+#import "CardReaderModule.h"
 #import "winscard.h"
 #import "ft301u.h"
 
-//buffer    char [20]    "bR301"
-//_readerName    __NSCFString *    @"FT_3481F433F880"    0x00000002835044b0
 static id myobject;
 SCARDCONTEXT gContxtHandle;
 BOOL _autoConnect;
@@ -21,8 +17,7 @@ typedef NS_ENUM(NSInteger, FTReaderType) {
     FTReaderBLE = 4
 };
 
-
-@implementation NtlCardReaderModule
+@implementation CardReaderModule
 {
     NSMutableArray *_deviceList;
     BOOL _isAutoConnect;
@@ -45,6 +40,7 @@ typedef NS_ENUM(NSInteger, FTReaderType) {
 
 RCT_EXPORT_MODULE();
 
+// sample method
 RCT_REMAP_METHOD(sample,
                  withResolver:(RCTPromiseResolveBlock)resolve
                  withRejecter:(RCTPromiseRejectBlock)reject)
@@ -52,7 +48,8 @@ RCT_REMAP_METHOD(sample,
   resolve(@"Hello");
 }
 
-RCT_EXPORT_METHOD(sample02: (RCTResponseSenderBlock)callback)
+// sample method
+RCT_EXPORT_METHOD(sayhello: (RCTResponseSenderBlock)callback)
 {
     callback(@[[NSNull null], @"Hello From Native"]);
 }
@@ -65,7 +62,6 @@ RCT_EXPORT_METHOD(initCard)
     @try {
         ULONG ret = SCardEstablishContext(SCARD_SCOPE_SYSTEM,NULL,NULL,&gContxtHandle);
         if(ret != 0){
-            //            [[Tools shareTools] showError:[[Tools shareTools] mapErrorCode:ret]];
         }
     }  @finally {
         
@@ -74,15 +70,6 @@ RCT_EXPORT_METHOD(initCard)
 
 
 RCT_EXPORT_METHOD(initDidMount){
-    //    interface = [[ReaderInterface alloc] init];
-    
-    //    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-    //        [self initReaderInterface];
-    //    });
-    
-    //     _readerType = FTReaderbR301;
-    //    _deviceList = [NSMutableArray array];
-    //    _autoConnect = YES;
     
 }
 
@@ -125,8 +112,7 @@ RCT_EXPORT_METHOD(getInitStatus : (RCTResponseSenderBlock)callback) {
 
 RCT_EXPORT_METHOD(connectCardReader : (RCTResponseSenderBlock)callback) {
     DWORD dwActiveProtocol = -1;
-    NSString *reader = @"FT__3481F43BBB94E";
-//  NSString *reader = @"bR301";
+    NSString *reader = @"bR301";
 
     LONG ret = SCardConnect(gContxtHandle, [reader UTF8String], SCARD_SHARE_SHARED,SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, &gCardHandle, &dwActiveProtocol);
     NSLog (@"bb :: ret = %i", ret);
@@ -139,8 +125,6 @@ RCT_EXPORT_METHOD(connectCardReader : (RCTResponseSenderBlock)callback) {
     }
     callback(@[@(isCardConnected)]);
     if(ret != 0){
-        //        NSString *errorMsg = [[Tools shareTools] mapErrorCode:ret];
-        //        [[Tools shareTools] showError:errorMsg];
         return;
     }
 
@@ -156,8 +140,6 @@ RCT_EXPORT_METHOD(connectCardReader : (RCTResponseSenderBlock)callback) {
 }
 
 RCT_EXPORT_METHOD(disconnectCardReader) {
-    //    interface = [[ReaderInterface alloc] init];
-    //    [interface setDelegate:self];
     NSLog (@"bb :: disconnectCardReader = %i", _isCardConnect);
     [self disconnectCard];
 }
@@ -174,35 +156,11 @@ RCT_EXPORT_METHOD(statusCardReader : (RCTResponseSenderBlock)callback) {
 
 -(void)getReaderName
 {
-    //    unsigned int length = 0;
-    //    char buffer[20] = {0};
-    //    LONG ret = FtGetReaderName(gContxtHandle, &length, buffer);
-    //    if (ret != SCARD_S_SUCCESS || length == 0) {
-    ////        [self showMsg:errorMsg];
-    //        return;
-    //    }
-    //
-    //    NSString *readerName = [NSString stringWithUTF8String:buffer];
-    //
-    //
-    //    if ([readerName isEqualToString:@"bR301"]) {
-    //        _readerType = FTReaderbR301;
-    //
-    //    }else if ([readerName isEqualToString:@"iR301"]) {
-    //        _readerType = FTReaderiR301;
-    //
-    //    }else if ([readerName isEqualToString:@"bR301BLE"]) {
-    //        _readerType = FTReaderbR301BLE;
-    //
-    //    }else if ([readerName isEqualToString:@"bR500"]) {
-    //        _readerType = FTReaderbR500;
-    //    }
-    
+   
 }
 
 RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
 {
-    
     NSMutableArray *idCardArray = [NSMutableArray array];
     unsigned  int capdulen;
     unsigned char capdu[2048 + 128];
@@ -251,11 +209,10 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
         iRet = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, resp, &resplen);
         NSLog (@"iRet = %i", iRet);
         if (iRet != 0) {
-            //            [self showMsg:[[Tools shareTools] mapErrorCode:iRet]];
-            //            [self updateDeviceStatusImage:FTCardStatusError];
+
         }else {
             if(i == 0){
-                //                [self showMsg:@"reset card"];
+
             }else if (i == 1){
                 NSData *readapduData =[self hexFromString:@"00C000000D"];
                 NSLog (@"hexFromString2 = %@", readapduData);
@@ -263,8 +220,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
                 NSLog (@"apduData2 = %@", readapduData);
                 capdulen = (unsigned int)[readapduData length];
                 NSLog (@"capdulen2 = %i", capdulen);
-                
-                //                [self updateDeviceStatusImage:FTCardStatusExcute];
                 
                 SCARD_IO_REQUEST pioSendPci;
                 LONG iRet2 = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, readData, &readDatalen);
@@ -289,8 +244,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
                 capdulen = (unsigned int)[readapduData length];
                 NSLog (@"capdulen2 = %i", capdulen);
                 
-                //                [self updateDeviceStatusImage:FTCardStatusExcute];
-                
                 SCARD_IO_REQUEST pioSendPci;
                 LONG iRet2 = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, readData2, &readDatalen2);
                 NSLog (@"CMD_PERSON_INFO===");
@@ -304,7 +257,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
                                                                withString:@""];
                 
                 NSLog (@"dataShow:%@",dataShow);
-                // rsStr =    [NSString stringWithFormat: @";%@%@", rsStr, dataShow];
                 [idCardArray addObject:(dataShow)];
             }else if (i == 3){
                 NSData *readapduData =[self hexFromString:@"00C0000064"];
@@ -313,8 +265,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
                 NSLog (@"apduData2 = %@", readapduData);
                 capdulen = (unsigned int)[readapduData length];
                 NSLog (@"capdulen2 = %i", capdulen);
-                
-                //                [self updateDeviceStatusImage:FTCardStatusExcute];
                 
                 SCARD_IO_REQUEST pioSendPci;
                 LONG iRet2 = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, readData3, &readDatalen3);
@@ -328,7 +278,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
                 dataShow = [dataShow stringByReplacingOccurrencesOfString:@"ê"
                                                                withString:@""];
                 NSLog (@"dataShow:%@",dataShow);
-                //rsStr =  [NSString stringWithFormat: @";%@%@", rsStr, dataShow];
                 [idCardArray addObject:(dataShow)];
                 
             }else if (i == 4){
@@ -338,8 +287,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
                 NSLog (@"apduData2 = %@", readapduData);
                 capdulen = (unsigned int)[readapduData length];
                 NSLog (@"capdulen2 = %i", capdulen);
-                
-                //                [self updateDeviceStatusImage:FTCardStatusExcute];
                 
                 SCARD_IO_REQUEST pioSendPci;
                 LONG iRet2 = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, readData4, &readDatalen4);
@@ -353,7 +300,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
                 dataShow = [dataShow stringByReplacingOccurrencesOfString:@"ê"
                                                                withString:@""];
                 NSLog (@"dataShow:%@",dataShow);
-                // rsStr =  [NSString stringWithFormat: @";%@%@", rsStr, dataShow];
                 [idCardArray addObject:(dataShow)];
             }else{
                 NSLog (@"===================");
@@ -364,9 +310,7 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
     NSLog (@"%@", rsStr);
     NSLog (@"bb :: sendCommand = %i", _isCardConnect);
     callback(@[[NSNull null],idCardArray]);
-    
 }
-
 
 //init readerInterface and card context
 - (void)initReaderInterface
@@ -376,19 +320,11 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
         _autoConnect = NO;
     }
     _autoConnect = value.boolValue;
-    //    [interface setAutoPair:_autoConnect];
-    //     [interface setDelegate:self];
-    
-    //set support device type, default support all readers;
-    //    [FTDeviceType setDeviceType:(FTDEVICETYPE)(IR301_AND_BR301 | BR301BLE_AND_BR500)];
-    
+
     ULONG ret = SCardEstablishContext(SCARD_SCOPE_SYSTEM,NULL,NULL,&gContxtHandle);
     if(ret != 0){
-        //        [[Tools shareTools] showError:[[Tools shareTools] mapErrorCode:ret]];
     }
 }
-
-
 
 //status card
 - (BOOL)statusCard {
@@ -411,23 +347,17 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
         NSLog(@"statusCard %08x",rv);
         return false;
     }
-    
 }
 
 //connect card
 - (void)connectCard {
     DWORD dwActiveProtocol = -1;
-  NSString *reader = @"FT__3481F43BBB94E";
-//  NSString *reader = @"bR301";
+    NSString *reader = @"bR301";
     
     LONG ret = SCardConnect(gContxtHandle, [reader UTF8String], SCARD_SHARE_SHARED,SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, &gCardHandle, &dwActiveProtocol);
-//    NSLog (@"bb :: ret = %i", ret);
     if(ret != 0){
-        //        NSString *errorMsg = [[Tools shareTools] mapErrorCode:ret];
-        //        [[Tools shareTools] showError:errorMsg];
         return;
     }
-    
     
     unsigned char patr[33] = {0};
     DWORD len = sizeof(patr);
@@ -445,7 +375,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
         SCardDisconnect(gCardHandle, SCARD_UNPOWER_CARD);
     });
     NSLog (@"bb :: disconnectCard = %i", _isCardConnect);
-//    _isCardConnect = false;
 }
 
 
@@ -467,11 +396,8 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
 }
 
 //- (BOOL) isCardAttached;
-
 - (void)cardInterfaceDidDetach:(BOOL)attached {
     // DID METHOD WHEN PUSH CARD OR REJECT CARD
-    
-//    NSLog (@"bb :: isCardAttached = %i", isCardAttached);
     _isCardConnect = attached;
     NSLog (@"bb :: attached = %i", attached);
     NSLog (@"bb :: isInsertCard = %i", _isCardConnect);
@@ -494,35 +420,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
 - (void)readerInterfaceDidChange:(BOOL)attached bluetoothID:(NSString *)bluetoothID{
     NSLog(@"readerInterfaceDidChange");
 }
-//    if (attached) {
-//        gBluetoothID = bluetoothID;
-//
-//
-//
-//        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//
-//            NSString *reader = [self getReaderList];
-//            if (reader.length == 0 || reader == nil) {
-//                return ;
-//            }
-//
-//            dispatch_async(dispatch_get_main_queue(), ^{
-////                _readerNameLabel.text = reader;
-//            });
-//
-//            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//
-//                if (_autoConnect) {
-//                    _selectedDeviceName = [self getReaderList];
-//                }  });
-//        });
-//    }else {
-//        dispatch_async(dispatch_get_main_queue(), ^{
-////            _readerNameLabel.text = @"No reader detected";
-//        });
-//    }
-//}
-
 
 -(NSData *)hexFromString:(NSString *)cmd
 {

@@ -1,5 +1,8 @@
 # react-native-feitian-br301-module
 react-native-library react-native-feitian-br301-module
+modify from: [repository](https://github.com/realoiji/react-native-ntl-id-card-reader.git)
+sdks: [version 3.5.64](https://github.com/FeitianSmartcardReader/FEITIAN_MOBILE_READERS.git)
+
 ## Installation
 
 ```sh
@@ -9,12 +12,13 @@ npm install react-native-feitian-br301-module
 ## Usage
 
 ```js
-import NtlCardReaderModule from "react-native-feitian-br301-module";
+import CardReaderModule from "react-native-feitian-br301-module";
+```
 
-// ...
-configuration ios
+## Configuration IOS
 
-info.plist
+```js
+[[info.plist]]
 <key>NSBluetoothAlwaysUsageDescription</key>
 <string>App need your approval to access to the bluetooth</string>
 <key>UISupportedExternalAccessoryProtocols</key>
@@ -31,19 +35,11 @@ info.plist
     <string>external-accessory</string>
 </array>
 
-link
+[[Link Binary With Libraries]]
 -libiRockey301_3.5.64_Release
--CoreBluetooth
--ExternalAccessory
+-CoreBluetooth.framework
+-ExternalAccessory.framework
 ```
-
-## Contributing
-
-See the [contributing guide](CONTRIBUTING.md) to learn how to contribute to the repository and the development workflow.
-
-## License
-
-MIT
 
 ---
 

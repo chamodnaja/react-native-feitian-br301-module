@@ -78,7 +78,6 @@ RCT_EXPORT_METHOD(getSN: (RCTResponseSenderBlock)callback) {
     char buffer[16] = {0};
     unsigned int length = 0;
     
-    
     DWORD ret = FtGetSerialNum(gContxtHandle, &length, buffer);
     if(ret == SCARD_S_SUCCESS){
         NSData *data = [NSData dataWithBytes:buffer length:length];
@@ -89,7 +88,6 @@ RCT_EXPORT_METHOD(getSN: (RCTResponseSenderBlock)callback) {
         callback(@[[NSNull null], @"error"]);
     }
 }
-
 
 RCT_EXPORT_METHOD(didEventCardisConnect : (RCTResponseSenderBlock)callback) {
     NSLog (@"bb :: didEventCardisConnect = %i", _isCardConnect);

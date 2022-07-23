@@ -1,13 +1,13 @@
-#ifndef NtlCardReaderModule_h
-#define NtlCardReaderModule_h
+#ifndef CardReaderModule_h
+#define CardReaderModule_h
 
 
-#endif /* RCTNtlCardReader_h */
+#endif /* CardReaderModule_h */
 
 #import <React/RCTLog.h>
 #import <React/RCTBridgeModule.h>
 #import "ReaderInterface.h"
-@interface NtlCardReaderModule : NSObject <RCTBridgeModule,ReaderInterfaceDelegate>
+@interface CardReaderModule : NSObject <RCTBridgeModule,ReaderInterfaceDelegate>
 
 + (NSString *)moduleName;
 

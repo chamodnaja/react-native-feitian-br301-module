@@ -21,8 +21,8 @@ export function multiply(a: number, b: number): Promise<number> {
   return FeitianBr301Module.multiply(a, b);
 }
 
-const NtlCardReaderModule = NativeModules.NtlCardReaderModule
-  ? NativeModules.NtlCardReaderModule
+const CardReaderModule = NativeModules.CardReaderModule
+  ? NativeModules.CardReaderModule
   : new Proxy(
       {},
       {
@@ -31,4 +31,4 @@ const NtlCardReaderModule = NativeModules.NtlCardReaderModule
         },
       }
     );
-export default NtlCardReaderModule;
+export default CardReaderModule;

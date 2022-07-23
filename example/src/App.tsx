@@ -1,26 +1,28 @@
 import * as React from 'react';
 
 import { StyleSheet, View, Text } from 'react-native';
-import NtlCardReaderModule, {
+import CardReaderModule, {
   multiply,
 } from 'react-native-feitian-br301-module';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
   const [result2, setResult2] = React.useState<string | undefined>();
+  const [result3, setResult3] = React.useState<string | undefined>();
 
   React.useEffect(() => {
     multiply(3, 7).then(setResult);
-    NtlCardReaderModule.sample().then(setResult2);
-    NtlCardReaderModule.sample02((err, data) => {
-      setResult2(data);
+    CardReaderModule.sample().then(setResult2);
+    CardReaderModule.sayhello((err, data) => {
+      setResult3(data);
     });
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Result: {result}</Text>
-      <Text>Result: {result2}</Text>
+      <Text>Result-multiply: {result}</Text>
+      <Text>Result-sample: {result2}</Text>
+      <Text>Result-sayhello: {result3}</Text>
     </View>
   );
 }

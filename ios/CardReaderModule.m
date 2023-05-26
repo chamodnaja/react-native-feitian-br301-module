@@ -90,12 +90,10 @@ RCT_EXPORT_METHOD(getSN: (RCTResponseSenderBlock)callback) {
 }
 
 RCT_EXPORT_METHOD(didEventCardisConnect : (RCTResponseSenderBlock)callback) {
-    NSLog (@"bb :: didEventCardisConnect = %i", _isCardConnect);
     callback(@[[NSNull null], @(_isCardConnect)]);
 }
 
 RCT_EXPORT_METHOD(getInitStatus : (RCTResponseSenderBlock)callback) {
-    NSLog (@"bb :: didEventCardisConnect = %i", _isCardConnect);
     LONG isValid = SCardIsValidContext(gContxtHandle);
     
     BOOL isInit = false;
@@ -113,7 +111,6 @@ RCT_EXPORT_METHOD(connectCardReader : (RCTResponseSenderBlock)callback) {
     NSString *reader = @"bR301";
 
     LONG ret = SCardConnect(gContxtHandle, [reader UTF8String], SCARD_SHARE_SHARED,SCARD_PROTOCOL_T0 | SCARD_PROTOCOL_T1, &gCardHandle, &dwActiveProtocol);
-    NSLog (@"bb :: ret = %i", ret);
 
     BOOL isCardConnected = false;
     if(ret == 0){
@@ -130,15 +127,9 @@ RCT_EXPORT_METHOD(connectCardReader : (RCTResponseSenderBlock)callback) {
     unsigned char patr[33] = {0};
     DWORD len = sizeof(patr);
     ret = SCardGetAttrib(gCardHandle,NULL, patr, &len);
-    if(ret != SCARD_S_SUCCESS)
-    {
-        NSLog(@"SCardGetAttrib error %08x",ret);
-    }
-    NSLog (@"bb :: connectCard = %i", _isCardConnect);
 }
 
 RCT_EXPORT_METHOD(disconnectCardReader) {
-    NSLog (@"bb :: disconnectCardReader = %i", _isCardConnect);
     [self disconnectCard];
 }
 
@@ -194,18 +185,13 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
     
     for (i = 0; i < [istapdu count]; i++) {
         // do something with object
-        NSLog (@"istapdu = %@", [istapdu objectAtIndex: i]);
         NSData *apduData =[self hexFromString:[istapdu objectAtIndex: i]];
-        NSLog (@"hexFromString = %@", apduData);
         [apduData getBytes:capdu length:apduData.length];
-        NSLog (@"apduData = %@", apduData);
         capdulen = (unsigned int)[apduData length];
-        NSLog (@"capdulen = %i", capdulen);
         
         //3.send data
         SCARD_IO_REQUEST pioSendPci;
         iRet = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, resp, &resplen);
-        NSLog (@"iRet = %i", iRet);
         if (iRet != 0) {
 
         }else {
@@ -213,100 +199,66 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
 
             }else if (i == 1){
                 NSData *readapduData =[self hexFromString:@"00C000000D"];
-                NSLog (@"hexFromString2 = %@", readapduData);
                 [readapduData getBytes:capdu length:readapduData.length];
-                NSLog (@"apduData2 = %@", readapduData);
                 capdulen = (unsigned int)[readapduData length];
-                NSLog (@"capdulen2 = %i", capdulen);
                 
                 SCARD_IO_REQUEST pioSendPci;
                 LONG iRet2 = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, readData, &readDatalen);
-                NSLog (@"CMD_CID===");
                 NSMutableData *RevData2 = [NSMutableData data];
-                NSLog (@"readData = %s", readData);
-                NSLog (@"readDatalen = %i", readDatalen);
-                NSLog (@"iRet2 = %i", iRet2);
                 [RevData2 appendBytes:readData length:readDatalen];
                 NSString *dataShow = [NSString stringWithFormat:@"%s", readData];
                 dataShow = [dataShow stringByReplacingOccurrencesOfString:@"ê"  withString:@""];
-                NSLog (@"dataShow:%@;",dataShow);
                 
                 rsStr =  dataShow;
                 [idCardArray addObject:(dataShow)];
                 
             }else if (i == 2){
                 NSData *readapduData =[self hexFromString:@"00C00000D1"];
-                NSLog (@"hexFromString2 = %@", readapduData);
                 [readapduData getBytes:capdu length:readapduData.length];
-                NSLog (@"apduData2 = %@", readapduData);
                 capdulen = (unsigned int)[readapduData length];
-                NSLog (@"capdulen2 = %i", capdulen);
                 
                 SCARD_IO_REQUEST pioSendPci;
                 LONG iRet2 = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, readData2, &readDatalen2);
-                NSLog (@"CMD_PERSON_INFO===");
-                NSLog (@"readData2 = %s", readData2);
-                NSLog (@"readDatalen2 = %i", readDatalen2);
-                NSLog (@"iRet2 = %i", iRet2);
                 NSString *dataShow = [NSString stringWithFormat:@"%s", readData2];
                 dataShow = [dataShow stringByReplacingOccurrencesOfString:@"ê"
                                                                withString:@""];
                 dataShow = [dataShow stringByReplacingOccurrencesOfString:@"Ó"
                                                                withString:@""];
                 
-                NSLog (@"dataShow:%@",dataShow);
                 [idCardArray addObject:(dataShow)];
             }else if (i == 3){
                 NSData *readapduData =[self hexFromString:@"00C0000064"];
-                NSLog (@"hexFromString2 = %@", readapduData);
                 [readapduData getBytes:capdu length:apduData.length];
-                NSLog (@"apduData2 = %@", readapduData);
                 capdulen = (unsigned int)[readapduData length];
-                NSLog (@"capdulen2 = %i", capdulen);
                 
                 SCARD_IO_REQUEST pioSendPci;
                 LONG iRet2 = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, readData3, &readDatalen3);
-                NSLog (@"CMD_ADDRESS===");
                 NSMutableData *RevData2 = [NSMutableData data];
-                NSLog (@"readData3 = %s", readData3);
-                NSLog (@"readDatalen3 = %i", readDatalen3);
-                NSLog (@"iRet2 = %i", iRet2);
                 [RevData2 appendBytes:readData3 length:readDatalen3];
                 NSString *dataShow = [NSString stringWithFormat:@"%s", readData3];
                 dataShow = [dataShow stringByReplacingOccurrencesOfString:@"ê"
                                                                withString:@""];
-                NSLog (@"dataShow:%@",dataShow);
                 [idCardArray addObject:(dataShow)];
                 
             }else if (i == 4){
                 NSData *readapduData =[self hexFromString:@"00C0000012"];
-                NSLog (@"hexFromString2 = %@", readapduData);
                 [readapduData getBytes:capdu length:apduData.length];
-                NSLog (@"apduData2 = %@", readapduData);
                 capdulen = (unsigned int)[readapduData length];
-                NSLog (@"capdulen2 = %i", capdulen);
                 
                 SCARD_IO_REQUEST pioSendPci;
                 LONG iRet2 = SCardTransmit(gContxtHandle, &pioSendPci, (unsigned char*)capdu, capdulen, NULL, readData4, &readDatalen4);
-                NSLog (@"CMD_CARD_ISSUE_EXPIRE===");
                 NSMutableData *RevData2 = [NSMutableData data];
-                NSLog (@"readData4 = %s", readData4);
-                NSLog (@"readDatalen4 = %i", readDatalen4);
-                NSLog (@"iRet2 = %i", iRet2);
                 [RevData2 appendBytes:readData4 length:readDatalen4];
                 NSString *dataShow = [NSString stringWithFormat:@"%s", readData4];
                 dataShow = [dataShow stringByReplacingOccurrencesOfString:@"ê"
                                                                withString:@""];
-                NSLog (@"dataShow:%@",dataShow);
                 [idCardArray addObject:(dataShow)];
             }else{
-                NSLog (@"===================");
+
             }
         }
         
     }
-    NSLog (@"%@", rsStr);
-    NSLog (@"bb :: sendCommand = %i", _isCardConnect);
     callback(@[[NSNull null],idCardArray]);
 }
 
@@ -335,14 +287,12 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
     
     rv = SCardStatus(gContxtHandle, (LPSTR) NULL, &dwReaderLen,
                      &dwState, &dwProt, NULL, &dwAtrLen );
-    NSLog(@"bb :: statusCard %i", rv);
 
     if ( rv == SCARD_S_SUCCESS )
     {
         return true;
     }
     else{
-        NSLog(@"statusCard %08x",rv);
         return false;
     }
 }
@@ -362,9 +312,8 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
     ret = SCardGetAttrib(gCardHandle,NULL, patr, &len);
     if(ret != SCARD_S_SUCCESS)
     {
-        NSLog(@"SCardGetAttrib error %08x",ret);
+
     }
-    NSLog (@"bb :: connectCard = %i", _isCardConnect);
 }
 
 
@@ -372,7 +321,6 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
         SCardDisconnect(gCardHandle, SCARD_UNPOWER_CARD);
     });
-    NSLog (@"bb :: disconnectCard = %i", _isCardConnect);
 }
 
 
@@ -397,13 +345,10 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
 - (void)cardInterfaceDidDetach:(BOOL)attached {
     // DID METHOD WHEN PUSH CARD OR REJECT CARD
     _isCardConnect = attached;
-    NSLog (@"bb :: attached = %i", attached);
-    NSLog (@"bb :: isInsertCard = %i", _isCardConnect);
     if (attached) {
-        NSLog(@"card present");
         
     }else {
-        NSLog(@"card not present");
+
     }
 }
 
@@ -412,11 +357,11 @@ RCT_EXPORT_METHOD(sendCommand: (RCTResponseSenderBlock)callback)
 }
 
 - (void)findPeripheralReader:(NSString *)readerName {
-    NSLog([NSString stringWithFormat:@"Find Reader: %@", readerName]);
+    
 }
 
 - (void)readerInterfaceDidChange:(BOOL)attached bluetoothID:(NSString *)bluetoothID{
-    NSLog(@"readerInterfaceDidChange");
+    
 }
 
 -(NSData *)hexFromString:(NSString *)cmd
